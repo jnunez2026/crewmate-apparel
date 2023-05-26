@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CREWMATE APPAREL: Come shop among us!</title>
+    
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=Montserrat:wght@600&display=swap" rel="stylesheet">
+
+    <style>
+        .btn {
+            background-color: black !important;
+            border-color: black !important;
+            color: white !important;
+            margin: 5px;
+        }
+
+        #lastPage {
+            z-index: 5;
+            display: none;
+            position: fixed;
+            top: 100px;
+            left: 500px;
+            width: 900px;
+            height: 700px;
+            background-color: rgba(255, 255, 255); 
+            font-size: 23px;
+        }
+
+        #cartDisp {
+            z-index: 4;
+            display: none;
+            position: absolute;
+            top: 480px;
+            left: 100px;
+            width: 75%;
+            min-height: 500px;
+            background-color: rgba(255, 255, 255); 
+        }
+
+        #shadow {
+            position: fixed;
+            display: none;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(2, 1, 21, 0.6);
+            z-index: 3;
+            cursor: pointer;
+        }
+
+        #table {
+            margin-left: 40px;
+            margin-right: 30px;
+            font-size: 23px;
+            color: rgb(107, 107, 107);
+        }
+
+        .row {
+            margin: 50px;
+        }
+
+        th {
+            color:black;
+        }
+
+        h2 {
+            margin-top: 20px;
+            margin-left: 20px;
+            font-size: 70px;
+            font-weight:600;
+            color: black;
+        }
+
+        #cartBox {
+            position: fixed;
+            top: 85%;
+            left: 0;
+        }
+
+        #cartimg {
+            height: 70px;
+            width: 70px;
+            padding: 5px;
+            border: 2px solid rgb(255, 255, 255);
+            border-radius: 3px;
+            background-color: rgb(0, 0, 0, 0.5);
+            box-shadow: 0 0 15px rgb(54, 54, 54);
+            margin-left: 20px;
+            position: fixed;
+        }
+
+        .col {
+            margin: 10px 10px;
+        }
+
+        #custDetails {
+            margin: 30px;
+            color: black;
+        }
+    </style>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
+
+    <script>
+        var order = [];
+        var total = 0;
+
+        /* --- MENU ITEMS --- */
+        const ss1 = {prod_name: "Among Us T-Shirt", prod_price: 700};
+        const ss2 = {prod_name: "Crewmate Crew T-Shirt", prod_price: 750};
+        const ss3 = {prod_name: "Impostor Gang T-Shirt", prod_price: 750};
+        const ss4 = {prod_name: "Back to School T-Shirt", prod_price: 800};
+        const ss5 = {prod_name: "Kinda Sus Hoodie", prod_price: 1100};
+        const ss6 = {prod_name: "Trust No One Hoodie", prod_price: 1100};
+        const ss7 = {prod_name: "Among Us Hoodie with Hood Ears", prod_price: 1350};
+        const ss8 = {prod_name: "Crewmate Jogging Pants", prod_price: 1550};
+        const ss9 = {prod_name: "Ejected Pajamas", prod_price: 1500};
+        const mh1 = {prod_name: "Among Us Cap", prod_price: 300};
+        const mh2 = {prod_name: "DUM Hat", prod_price: 350};
+        const mh3 = {prod_name: "Crewmate Visor Beanie", prod_price: 3500};
+        const mh4 = {prod_name: "Among Us Bucket Hat", prod_price: 500};
+        const mh5 = {prod_name: "The Siebe Underwater Helmet, Oldest Surviving Prototype", prod_price: 7640500};
+        const mh6 = {prod_name: "Among Us Party Hat 50pcs", prod_price: 850};
+        const pf1 = {prod_name: "Ejected Sneakers", prod_price: 1750};
+        const pf2 = {prod_name: "Dead Body Reported Sneakers", prod_price: 1750};
+        const pf3 = {prod_name: "Among Us Jibbitz Charms for Crocs", prod_price: 600};
+        const pf4 = {prod_name: "Custom Nike Air Force Among Us Design", prod_price: 2250};
+        const pf5 = {prod_name: "Crewmate Flip Flops", prod_price: 1200};
+        const pf6 = {prod_name: "Sussy Sandals", prod_price: 2500};
+        const aa1 = {prod_name: "Crewmate Hair Pins", prod_price: 300};
+        const aa2 = {prod_name: "Are You With Us? ID Lanyard", prod_price: 250};
+        const aa3 = {prod_name: "Mini Crewmate Earrings", prod_price: 1550};
+        const aa4 = {prod_name: "Crewmate Pop It Toy Keychain", prod_price: 275};
+        const aa5 = {prod_name: "Dead Body Reported Engagement Ring Holder", prod_price: 8500};
+        const aa6 = {prod_name: "Complete Personal Protective Equipment Against COVID-19", prod_price: 800};
+        /* --- MENU ITEMS --- */
+
+        function addToCart(item) {
+            const totalDisplay = document.getElementById("total");
+            const table = document.getElementById("table-cart");
+            const row = table.insertRow(0);
+            const deleteBtn = row.insertCell(0);
+            const nameDisplay = row.insertCell(1);
+            const priceDisplay = row.insertCell (2);
+
+            deleteBtn.innerHTML = '<input type="button" value="Remove" onclick="removeItem(event)" class="btn btn-primary">';
+            nameDisplay.innerHTML = item.prod_name;
+            priceDisplay.innerHTML = item.prod_price;
+
+            order.push(item);
+            total += parseInt(item.prod_price);
+            totalDisplay.innerHTML = `₱ ${total}.00`;
+
+            const cust_order = document.getElementById("cust_order");
+            cust_order.value = JSON.stringify(order);
+        }
+
+        function removeItem(event) {
+            var i = event.target.parentNode.parentNode.rowIndex;
+            var j = event.rowIndex;
+            var price = document.getElementById("table-cart").rows[i - 1].cells[2].innerHTML;
+            total -= parseInt(price);
+            document.getElementById("total").innerHTML = `₱ ${total}.00`;
+            document.getElementById("table-cart").deleteRow(i - 1);
+            order.splice(j, 1);
+
+            const cust_order = document.getElementById("cust_order");
+            cust_order.value = JSON.stringify(order);
+        }
+
+        function cartDisplay(k) {
+            switch (k) {
+                case 0:
+                    document.getElementById("cartDisp").style.display = "block";
+                    document.getElementById("shadow").style.display = "block";
+                    break;
+                
+                case 1:
+                    document.getElementById("cartDisp").style.display = "none";
+                    document.getElementById("shadow").style.display = "none";
+                    break;
+            }
+        }
+
+        function formDisplay(l) {
+            switch (l) {
+                case 0:
+                    document.getElementById("lastPage").style.display = "block";
+                    document.getElementById("cartDisp").style.display = "none";
+                    document.getElementById("shadow").style.display = "block";
+                    break;
+
+                case 1:
+                    document.getElementById("lastPage").style.display = "none";
+                    document.getElementById("cartDisp").style.display = "none";
+                    document.getElementById("shadow").style.display = "none";
+                    break;
+            }
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <img src="logo.png" alt="Crewmate Apparel logo" id="mainLogo">
+        <h1 id="apparelTitle">CREWMATE APPAREL</h1>
+        <h3>Come shop among us!</h3>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="index.html#ssCateg">Outfits</a></li>
+            <li><a href="index.html#mhCateg">Headwear</a></li>
+            <li><a href="index.html#pfCateg">Footwear</a></li>
+            <li><a href="index.html#aaCateg">Accessories</a></li>
+            <li><a href="about.html">About the Company</a></li>
+        </ul>
+    </nav>
+    <div id="cartBox">
+        <img src="images/cart.png" alt="cart" id="cartimg" onclick="cartDisplay(0)">
+    </div>
+    <main class="container">
+            <h1>The Catalogue</h1>
+            <h3 id="ssCateg">-The Skeld Style-</h3>
+            <h6>-Hijack your style-</h6>
+            <p></p>
+            <div class="row">
+                <div class="card col">
+                    <div class="card-body">
+                        <img src="images/ss1.jpg" alt="Among Us T-Shirt" class="card-img-top">
+                        <h5>Among Us T-Shirt</h5>
+                        <h6>Made from 100% cotton for maximum comfort. Sleek ergonomic design, hand-crafted by an overworked Chinese factory worker in Taipei..</h6>
+                        <p><em>PHP 700</em></p>
+                        <input type="submit" class="btn btn-primary" value="Add to Cart" onclick="addToCart(ss1)">
+                    </div>
+                    <div class="card-footer">
+                        <p>Image Source: </p>
+                        <a href="https://m.media-amazon.com/images/I/71dP+yWF-ML._AC_SX679_.jpg">https://m.media-amazon.com/images/I/71dP+yWF-ML._AC_SX679_.jpg</a>
+                    </div>
+                </div>
+                <div class="card col">
+                    <div class="card-body">
+                        <img src="images/ss2.jpg" alt="Crewmate Crew T-Shirt" class="card-img-top">
+                        <h5>Crewmate Crew T-Shirt</h5>
+                        <h6>Get the [Lawful good] crew together with this ULTRA DRIPPY shirt. Colour printed on by a Epson L120 series printer. 75% cotton, 25% dead rat skin.</h6>
+                        <p><em>PHP 750</em></p>
+                        <input type="submit" class="btn btn-primary" value="Add to Cart" onclick="addToCart(ss2)">
+                    </div>
+                    <div class="card-footer">
+                        <p>Image Source</p>
+                        <a href="https://m.media-amazon.com/images/I/61CTmDCDkcL._AC_UX679_.jpg">https://m.media-amazon.com/images/I/61CTmDCDkcL._AC_UX679_.jpg</a>
+                    </div>
+                </div>
+                <div class="card col">
+                    <div class="card-body">
+                        <img src="images/ss3.jpg" alt="Impostor Gang T-Shirt" class="card-img-top">
+                        <h5>Impostor Gang T-Shirt</h5>
+                        <h6>Get the [Lawful evil] gang together with this ULTRA DRIPPY shirt. Cotton from India. Made in China.</h6>
+                        <p><em>PHP 750</em></p>
+                        <input type="submit" class="btn btn-primary" value="Add to Cart" onclick="addToCart(ss3)">
+                    </div>
+                    <div class="card-footer">
+                        <p>Image Source: </p>
+                        <a href="https://www.impericon.com/500x723x90/media/catalog/product/a/m/amongus_purpleimpostor_tops_tshirt_amo02380tsb_art21-008326_5056463449530_488582-153.jpg">https://www.impericon.com/500x723x90/media/catalog/product/a/m/amongus_purpleimpostor_tops_tshirt_amo02380tsb_art21-008326_5056463449530_488582-153.jpg</a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="card col">
+                    <div class="card-body">
+                        <img src="images/ss4.jpg" alt="Back to School T-Shirt" class="card-img-top">
+                        <h5>Back to School T-Shirt</h5>
+                        <h6>Casual wear for the KEWL kids, only gigachads can wear this rockin' shirt, yo. 50% cotton, 25% narcissism, 25% ignonarance to the state of the world.</h6>
+                        <p><em>PHP 800</em></p>
+                        <input type="submit" class="btn btn-primary" value="Add to Cart" onclick="addToCart(ss4)">
+                    </div>
+                    <div class="card-footer">
+                        <p>Image Source: </p>
+                        <a href="https://www.thelossofgravity.com/wp-content/uploads/2022/12/among-us-t-shirt-987xex-1.jpg">https://www.thelossofgravity.com/wp-content/uploads/2022/12/among-us-t-shirt-987xex-1.jpg</a>
+                    </div>
+                </div>
+                <div class="card col">
+                    <div class="card-body">
+                        <img src="images/ss5.jpg" alt="Kinda Sus Hoodie" class="card-img-top">
+                        <h5>Kinda Sus Hoodie</h5>
+                        <h6>Be up to date with the new fashion that's been all the rage! Sleek colours combined with sleek comfortability. Everyone will surely like you now that you're funny, right? 90% cotton, 10% "Please love me".</h6>
+                        <p><em>PHP 1100</em></p>
+                        <input type="submit" class="btn btn-primary" value="Add to Cart" onclick="addToCart(ss5)">
+                    </div>
+                    <div class="card-footer">
+                        <p>Image Source: </p>
+                        <a href="https://m.media-amazon.com/images/I/51JnsJZQWFL._AC_UX679_.jpg">https://m.media-amazon.com/images/I/51JnsJZQWFL._AC_UX679_.jpg</a>
+                    </div>
+                </div>
+                <div class="card col">
+                    <div class="card-body">
+                        <img src="images/ss6.jpg" alt="Trust No One Hoodie" class="card-img-top">
+                        <h5>Trust No One Hoodie</h5>
+                        <h6>Be up to date with the new fashion that's been all the rage! Sleek colours combined with sleek comfortability. All the women will LOVE your "silent" personality! 10% cotton, 90% "No one understands me".</h6>
+                        <p><em>PHP 1100</em></p>
+                        <input type="submit" class="btn btn-primary" value="Add to Cart" onclick="addToCart(ss6)">
+                    </div>
+                    <div class="card-footer">
+                        <p>Image Source: </p>
+                        <a href="https://americastee.com/product/among-us-trust-no-one-shirt/">https://americastee.com/product/among-us-trust-no-one-shirt/</a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="card col">
+                    <div class="card-body">
+                        <img src="images/ss7.jpg" alt="Among Us Hoodie with Hood Ears" class="card-img-top">
+                        <h5>Among Us Hoodie with Hood Ears</h5>
+                        <h6>You'ww totawwy become cutew wif weawing dis! x3 Suwely, owo, evewyone wiww stawt paying attention to u when u fit in, wight?~~ &gt;:3c 75% Wool from Denmark, 25% repressed childhood trauma. &gt;w&lt;</h6>
+                        <p><em>PHP 1350</em></p>
+                        <input type="submit" class="btn btn-primary" value="Add to Cart" onclick="addToCart(ss7)">
+                    </div>
+                    <div class="card-footer">
+                        <p>Image Source: </p>
+                        <a href="https://www.dresskiss.com/boy-warm-among-us-cat-pouch-pullover-hoodie-sweatshirt-p-6905.html">https://www.dresskiss.com/boy-warm-among-us-cat-pouch-pullover-hoodie-sweatshirt-p-6905.html</a>
+                    </div>
+                </div>
+                <div class="card col">
+                    <div class="card-body">
+                        <img src="images/ss8.jpg" alt="Crewmate Jogging Pants" class="card-img-top">
+                        <h5>Crewmate Jogging Pants</h5>
+                        <h6>Buying jogging pants doesn't automatically make you slimmer. However, even though it doesn't make you slimmer, doesn't mean it doesn't make you look better! Fitted with state of the art heat releasing technology, this sexy pair of pants will make sure to keep you cool and fashionable when you finally touch grass for the first time in seven years :D.</h6>
+                        <p><em>PHP 1550</em></p>
+                        <input type="submit" class="btn btn-primary" value="Add to Cart" onclick="addToCart(ss8)">
+                    </div>
+                    <div class="card-footer">
+                        <p>Image Source: </p>
+                        <a href="https://superheroesgears.com/products/among-us-crew-in-space-dope-jogger-pants/">https://superheroesgears.com/products/among-us-crew-in-space-dope-jogger-pants/</a>
+                    </div>
+                </div>
+                <div class="card col">
+                    <div class="card-body">
+                        <img src="images/ss9.jpg" alt="Ejected Pajamas" class="card-img-top">
+                        <h5>Ejected Pajamas</h5>
+                        <h6>Don't put this on, or you'll sleep within 10 minutes! That's how comfortably sylish our pyjamas are. Now, you don't need to look good while sleeping &#40;you don't have a girlfriend&#41;, but this absolute beast of a pyjama will make you sleep the best slumber you've had in your life while looking needlessly stylish.</h6>
+                        <p><em>PHP 1500</em></p>
+                        <input type="submit" class="btn btn-primary" value="Add to Cart" onclick="addToCart(ss9)">
+                    </div>
+                    <div class="card-footer">
+                        <p>Image Source: </p>
+                        <a href="https://shopee.ph/2021-New-Game-Among-Us-Spring-Autumn-Children-Pajamas-for-Girls-Teen-Clothing-Set-Boys-Tops-Pants-i.377396886.2926571232">https://shopee.ph/2021-New-Game-Among-Us-Spring-Autumn-Children-Pajamas-for-Girls-Teen-Clothing-Set-Boys-Tops-Pants-i.377396886.2926571232</a>
+                    </div>
+                </div>
+            </div>
+            <h3 id="mhCateg">-MIRA Headwear-</h3>
+            <h6>-Looks that might actually kill-</h6>
+            <div class="row">
+                <div class="card col">
+                    <div class="card-body">
+                        <img src="images/mh1.jpg" alt="Among Us Cap" class="card-img-top">
+                        <h5>Among Us Cap</h5>
+                        <h6>Sometimes, all we need is a super sexy Among Us Baseball Cap to level up your stealth game and sabotage google meets in style. Nothing screams "I'm innocent" like sporting a hat from the 1940s. Don't worry, I'm not gonna ask where you were from 1939 to 1945 haha.</h6>
+                        <p><em>PHP 300</em></p>
+                        <input type="submit" class="btn btn-primary"  value="Add to Cart" onclick="addToCart(mh1)">
+                    </div>
+                    <div class="card-footer">
+                        <p>Image Source:</p>
+                        <a href="https://www.fruugoindia.com/summer-cartoon-sunshade-hat/p-63625570-128318404?language=en#">https://www.fruugoindia.com/summer-cartoon-sunshade-hat/p-63625570-128318404?language=en#</a>
+                    </div>
+                </div>
+                <div class="card col">
+                    <div class="card-body">
+                        <img src="images/mh2.png" alt="DUM Hat" class="card-img-top">
+                        <h5>DUM Hat</h5>
+                        <h6>Looking around at your current hat collection, filled with lackluster designs and uninspiring slogans, you must face the hard truth: you're desperately in need of a DUM hat, because let's be honest, nothing screams 'fashion-forward genius' like wearing an acronym that stands for your lifelong regrets and insecurities!</h6>
+                        <p><em>PHP 350</em></p>
+                        <input type="submit" class="btn btn-primary"  value="Add to Cart" onclick="addToCart(mh2)">
+                    </div>
+                    <div class="card-footer">
+                        <p>Image Source: </p>
+                        <a href="https://store.innersloth.com/products/among-us-dum-hat">https://store.innersloth.com/products/among-us-dum-hat</a>
+                    </div>
+                </div>
+                <div class="card col">
+                    <div class="card-body">
+                        <img src="images/mh3.jpg" alt="Crewmate Visor Beanie" class="card-img-top">
+                        <h5>Crewmate Visor Beanie</h5>
+                        <h6>Grab yourself a Crewmate visor beanie and keep your noggin warm while you navigate burnout and zoom meetings in style. With this beanie, you'll be the ultimate crewmate, ready to vent your way through any amount of sleepless nights! Just remember, no need to call an emergency meeting over this decision, because it's a total win. Get yours now and stay cozy while you complete tasks like an overworked Japanese young adult!</h6>
+                        <p><em>PHP 3500</em></p>
+                        <input type="submit" class="btn btn-primary"  value="Add to Cart" onclick="addToCart(mh3)">
+                    </div>
+                    <div class="card-footer">
+                        <p>Image Source: </p>
+                        <a href="https://www.fruugo.ph/sajy-among-us-merch-cosplay-winter-hat-fashion-warming-knited-beanie/p-77026308-155623349">https://www.fruugo.ph/sajy-among-us-merch-cosplay-winter-hat-fashion-warming-knited-beanie/p-77026308-155623349</a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="card col">
+                    <div class="card-body">
+                        <img src="images/mh4.jpeg" alt="Among Us Bucket Hat" class="card-img-top">
+                        <h5>Among Us Bucket Hat</h5>
+                        <h6>The spy said to the soldier: "This, is a bucket." The soldier replies: "Dear god..." A hat so cool, your enemies wish they were wearing this hat.</h6>
+                        <p><em>PHP 500</em></p>
+                        <input type="submit" class="btn btn-primary"  value="Add to Cart" onclick="addToCart(mh4)">
+                    </div>
+                    <div class="card-footer">
+                        <p>Image Source:</p>
+                        <a href="https://curtsyapp.com/item/strive-with-grace-enterprise-among-us-bucket-hat/X8NRHphnmd">https://curtsyapp.com/item/strive-with-grace-enterprise-among-us-bucket-hat/X8NRHphnmd</a>
+                    </div>
+                </div>
+                <div class="card col">
+                    <div class="card-body">
+                        <img src="images/mh5.jpg" alt="The Siebe Underwater Helmet, Oldest Surviving Prototype" class="card-img-top">
+                        <h5>The Siebe Underwater Helmet, Oldest Surviving Prototype</h5>
+                        <h6>Some of the oldest suriviving prototypes and models of the Siebe Underwater Helmet. No, really, we bought these as a joke because haha it looks like a crewmate, but please, do us a favor and buy them. They're definitely not cursed, pinky promise.</h6>
+                        <p><em>PHP 7640500</em></p>
+                        <input type="submit" class="btn btn-primary"  value="Add to Cart" onclick="addToCart(mh5)">
+                    </div>
+                    <div class="card-footer">
+                        <p>Image Source:</p>
+                        <a href="https://www.lyonandturnbull.com/auction/lot/3-siebe-gorman-12-bolt-copper-diving-helmet-with/?lot=105360&sd=1">https://www.lyonandturnbull.com/auction/lot/3-siebe-gorman-12-bolt-copper-diving-helmet-with/?lot=105360&sd=1</a>
+                    </div>
+                </div>
+                <div class="card col">
+                    <div class="card-body">
+                        <img src="images/mh6.jpg" alt="Among Us Party Hat 50pcs" class="card-img-top">
+                        <h5>Among Us Party Hat 50pcs</h5>
+                        <h6>Happy birthday dear crewmate! 50 pieces of pure fun! Good for any age, gender, sex, race, nationality, religion, hobby, MBTI, zodiac sign, cat lover or dog lover, Demonic Classification in the Ars Goetia, and Circle of Heaven according to Dante's Paradise!</h6>
+                        <p><em>PHP 850</em></p>
+                        <input type="submit" class="btn btn-primary"  value="Add to Cart" onclick="addToCart(mh6)">
+                    </div>
+                    <div class="card-footer">
+                        <p>Image Source:</p>
+                        <a href="https://partiesmadepersonal.com/among-us-birthday-party/">https://partiesmadepersonal.com/among-us-birthday-party/</a>
+                    </div>
+                </div>
+            </div>
+            <h3 id="pfCateg">-Polus Footwear-</h3>
+            <h6>Suspiciously Dripped</h6>
+            <div class="row">
+                <div class="card col">
+                    <img src="images/pf1.png" alt="Ejected Sneakers" class="card-img-top">
+                    <div class="card-body">
+                        <h5>Ejected Sneakers</h5>
+                        <h6>Step up your back-to-school game with our Ejected Slippers, the perfect footwear for those filipinos who like to sleep 4 hours a day while keeping their toes cozy. These slippers feature a playful design inspired by everyone's favorite game, reminding your classmates that you're not just any ordinary student, but a pro at getting voted out in style. So, slip into these slippers and strut through the hallways with a mischievous grin, because being "ejected" from comfort has never looked this cool.</h6>
+                        <p><em>PHP 1750</em></p>
+                        <input type="submit" class="btn btn-primary" value="Add to Cart" onclick="addToCart(pf1)">
+                    </div>
+                    <div class="card-footer">
+                        <p>Image Source:</p>
+                        <a href="https://www.reddit.com/r/AmongUs/comments/kvlpjm/painted_my_brother_some_among_us_shoes/">https://www.reddit.com/r/AmongUs/comments/kvlpjm/painted_my_brother_some_among_us_shoes/</a>
+                    </div>
+                </div>
+                <div class="card col">
+                    <div class="card-body">
+                        <img src="images/pf2.png" alt="Dead Body Reported Sneakers" class="card-img-top">
+                        <h5>Dead Body Reported Sneakers</h5>
+                        <h6>Upgrade your shoe game with our Dead Body Reported Sneakers, inspired by the statistics paper that keeps you on your toes. These sneakers feature a sleek design with a hint of mystery, making them the perfect choice for students who are always one step ahead of the game. So, grab a pair and be the talk of the school as you walk confidently, leaving a trail of dead brain cells in your wake.</h6>
+                        <p><em>PHP 1750</em></p>
+                        <input type="submit" class="btn btn-primary" value="Add to Cart" onclick="addToCart(pf2)">
+                    </div>
+                    <div class="card-footer">
+                        <p>Image Source:</p>
+                        <a href="https://www.reddit.com/r/AmongUs/comments/kvlpjm/painted_my_brother_some_among_us_shoes/">https://www.reddit.com/r/AmongUs/comments/kvlpjm/painted_my_brother_some_among_us_shoes/</a>
+                    </div>
+                </div>
+                <div class="card col">
+                    <div class="card-body">
+                        <img src="images/pf3.png" alt="Among Us Jibbitz Charms for Crocs" class="card-img-top">
+                        <h5>Among Us Jibbitz Charms for Crocs</h5>
+                        <h6>Everyone knows the Crocs is God's second Son and gift to mankind. Elevate your style statistically, with our Among Us Jibbitz charms for Crocs, adding a touch of sneaky fun to your footwear. These charms are the perfect way to show off your love for the insomnia while rocking your comfy Crocs, making your classmates "sus" of your coolness factor. So, snag a set of these charms and let your shoes be the talk of the school as you navigate the hallways with stealthy style of a zombie with diarrhea--holy diarrhea, even.</h6>
+                        <p><em>PHP 600</em></p>
+                        <input type="submit" class="btn btn-primary" value="Add to Cart" onclick="addToCart(pf3)">
+                    </div>
+                    <div class="card-footer">
+                        <p>Image Source:</p>
+                        <a href="https://www.lazada.com.ph/products/among-us-crocs-jibbitz-charms-pvc-shoes-charm-decoration-for-croc-diy-gift-accessory-lace-decorations-i3349472774-s17046633729.html?spm=a2o4l.tm80167379.7779702790.1.1c75FJbbFJbbiC.1c75FJbbFJbbiC&priceCompare=skuId%3A17046633710%3Bsource%3Alazada-om%3Bsn%3Ad93b14f9-53e7-4bd8-bd74-9c95d3071492%3BoriginPrice%3A1918%3BvoucherPrice%3A1918%3Btimestamp%3A1685072233579">https://www.lazada.com.ph/products/among-us-crocs-jibbitz-charms-pvc-shoes-charm-decoration-for-croc-diy-gift-accessory-lace-decorations-i3349472774-s17046633729.html?spm=a2o4l.tm80167379.7779702790.1.1c75FJbbFJbbiC.1c75FJbbFJbbiC&priceCompare=skuId%3A17046633710%3Bsource%3Alazada-om%3Bsn%3Ad93b14f9-53e7-4bd8-bd74-9c95d3071492%3BoriginPrice%3A1918%3BvoucherPrice%3A1918%3Btimestamp%3A1685072233579/</a>
+                    </div>
+                </div>
+                </div>
+            <div class="row">
+                <div class="card col">
+                    <div class="card-body">
+                        <img src="images/pf4.jpg" alt="Custom Nike Air Force Among Us Design" class="card-img-top">
+                        <h5>Custom Nike Air Force Among Us Design</h5>
+                        <h6>The marching band erupts for the shadows, and carrying their sexy brass instruments, you peer down at their feet and within seconds a voice appears in your heads and says "SHEEEEEEEEEEEEEEEEEESH dawg, dem some impasta lookin' drip, I'm hella impressed, no cap". The was your subconscious, and why wouldn't it be impressed with the new CUSTOM NIKE AIR FORCE AMONG US DESIGN. Available nationwide. This was the shoes your WWI veteran great grandpa was talking about.</h6>
+                        <p><em>PHP 2250</em></p>
+                        <input type="submit" class="btn btn-primary" value="Add to Cart" onclick="addToCart(pf4)">
+                    </div>
+                    <div class="card-footer">
+                        <p>Image Source:</p>
+                        <a href="https://a301.kamiblogs.com/html01_w301.php?hh=islandcrematorium.ie&s=6.58.8027904.5.22.56.custom%20air%20force%201">https://a301.kamiblogs.com/html01_w301.php?hh=islandcrematorium.ie&s=6.58.8027904.5.22.56.custom%20air%20force%201</a>
+                    </div>
+                </div>
+                <div class="card col">
+                    <div class="card-body">
+                        <img src="images/pf5.jpg" alt="Crewmate Flip Flops" class="card-img-top">
+                        <h5>Crewmate Flip Flops</h5>
+                        <h6>Never let your guard down. Be stylish at home. Be stylish at the sari-sari store while buying ice tubig. Keep your floor stylish as you lay in bed all day during the weekends. Be cool like that. Be casual. Be cozy.</h6>
+                        <p><em>PHP 1200</em></p>
+                        <input type="submit" class="btn btn-primary" value="Add to Cart" onclick="addToCart(pf5)">
+                    </div>
+                    <div class="card-footer">
+                        <p>Image Source:</p>
+                        <a href="https://www.lazada.co.id/products/sandal-anak-karakter-gamer-among-us-sandal-amoung-us-sandal-among-us-sandal-anak-among-us-sandal-jepit-anak-among-us-i4779074506-s8798003000.html?spm=a2o4j.tm80150940.3312045370.1.3cecbXgDbXgDuT.3cecbXgDbXgDuT&priceCompare=skuId%3A8798002997%3Bsource%3Alazada-om%3Bsn%3A17c4157e-2cec-482b-b9fd-f69937e9b8cf%3BoriginPrice%3A1000000%3BvoucherPrice%3A1000000%3Btimestamp%3A1685072594510">https://www.lazada.co.id/products/sandal-anak-karakter-gamer-among-us-sandal-amoung-us-sandal-among-us-sandal-anak-among-us-sandal-jepit-anak-among-us-i4779074506-s8798003000.html?spm=a2o4j.tm80150940.3312045370.1.3cecbXgDbXgDuT.3cecbXgDbXgDuT&priceCompare=skuId%3A8798002997%3Bsource%3Alazada-om%3Bsn%3A17c4157e-2cec-482b-b9fd-f69937e9b8cf%3BoriginPrice%3A1000000%3BvoucherPrice%3A1000000%3Btimestamp%3A1685072594510</a>
+                    </div>
+                </div>
+                <div class="card col">
+                    <div class="card-body">
+                        <img src="images/pf6.png" alt="Sussy Sandals" class="card-img-top">
+                        <h5>Sussy Sandals</h5>
+                        <h6>The sexiest, sussiest, silliest, most superb, most scrumptious sandal to ever scrape the surface of the Earth. Just placing your order for a pair of these gets everybody swooning. Unbox them and wear them--no, don them. Then, watch everyone within a lightyear fall to the floor.</h6>
+                        <p><em>PHP 2500</em></p>
+                        <input type="submit" class="btn btn-primary" value="Add to Cart" onclick="addToCart(pf5)">
+                    </div>
+                    <div class="card-footer">
+                        <p>Image Source:</p>
+                        <a href="https://sussysandals.com/">https://sussysandals.com/</a>
+                    </div>
+                </div>
+            </div>
+            <h3 id="aaCateg">-The Airship Accessories-</h3>
+            <h6>-Brings out the alien beast in you-</h6>
+            <div class="row">
+                <div class="card col">
+                    <div class="card-body">
+                        <img src="images/aa1.jpg" alt="Crewmate Hair Pins" class="card-img-top">
+                        <h5>Crewmate Hair Pins</h5>
+                        <h6>Look instantly prettier and irresistible to boys &#40;or girls, within, and beyond, we don't judge&#41; with these dutiful crewmate hair pins! Don't tell Aphrodite, but I think you'd be cuter than her in these ;&#41;</h6>
+                        <p><em>PHP 300</em></p>
+                        <input type="submit" class="btn btn-primary" value="Add to Cart" onclick="addToCart(aa1)">
+                    </div>
+                    <div class="card-footer">
+                        <p>Image Source:</p>
+                        <a href="https://www.zozotings.com/product-page/among-us-snap-hair-clips">https://www.zozotings.com/product-page/among-us-snap-hair-clips</a>
+                    </div>
+                </div>
+                <div class="card col">
+                    <div class="card-body">
+                        <img src="images/aa2.png" alt="Are You With Us? ID Lanyard" class="card-img-top">
+                        <h5>Are You With Us? ID Lanyard</h5>
+                        <h6>Rock that goody-two-shoes, never-forgotten-my-ID-once look. Nerdy is the new cool! Socially anxious is the new rockstar! Crippling depression has always been the best musician, artist, and poet!</h6>
+                        <p><em>PHP 250</em></p>
+                        <input type="submit" class="btn btn-primary" value="Add to Cart" onclick="addToCart(aa2)">
+                    </div>
+                    <div class="card-footer">
+                        <p>Image Source:</p>
+                        <a href="https://www.lazada.com.ph/products/high-quality-lanyard-id-lace-w-among-us-are-you-with-us-design-i1902159601-s8072496038.html?spm=a2o4l.tm80167379.7779702790.1.55c0DvSqDvSqRA.55c0DvSqDvSqRA&priceCompare=skuId%3A8072496038%3Bsource%3Alazada-om%3Bsn%3A95cd812b-fd4f-49d7-ad85-ff991f4136ac%3BoriginPrice%3A9410%3BvoucherPrice%3A9410%3Btimestamp%3A1685073357090">https://www.lazada.com.ph/products/high-quality-lanyard-id-lace-w-among-us-are-you-with-us-design-i1902159601-s8072496038.html?spm=a2o4l.tm80167379.7779702790.1.55c0DvSqDvSqRA.55c0DvSqDvSqRA&priceCompare=skuId%3A8072496038%3Bsource%3Alazada-om%3Bsn%3A95cd812b-fd4f-49d7-ad85-ff991f4136ac%3BoriginPrice%3A9410%3BvoucherPrice%3A9410%3Btimestamp%3A1685073357090</a>
+                    </div>
+                </div>
+                <div class="card col">
+                    <div class="card-body">
+                        <img src="images/aa3.jpg" alt="Mini Crewmate Earrings" class="card-img-top">
+                        <h5>Mini Crewmate Earrings</h5>
+                        <h6>Have you ever wanted to wear a crewmate on each of your ears? Well, even, better, we have two for each ear. Ooh you want to buy these so bad now, don't you?</h6>
+                        <p><em>PHP 1500</em></p>
+                        <input type="submit" class="btn btn-primary" value="Add to Cart" onclick="addToCart(aa3)">
+                    </div>
+                    <div class="card-footer">
+                        <p>Image Source:</p>
+                        <a href="https://www.etsy.com/listing/891304627/among-us-earrings">https://www.etsy.com/listing/891304627/among-us-earrings</a>
+                    </div>
+                </div>
+                </div>
+                <div class="row">
+                <div class="card col">
+                    <div class="card-body">
+                        <img src="images/aa4.jpg" alt="Crewmate Pop It Toy Keychain" class="card-img-top">
+                        <h5>Crewmate Pop It Toy Keychain</h5>
+                        <h6>The perfect toy to "pop it" to, as the kids say, while watching stolen Tiktoks, obscure indie platformer gameplay, and Family Guy clips at the same time in YouTube Shorts.
+                        <br><br>    
+                        Disclaimer: we are not responsible for any cases of child neglect that may arise within buyers of this product. We are also not liable if your kid turns out to either be gay, trans, or both, and ignores you after elementary. Good for them if so, actually.</h6>
+                        <p><em>PHP 275</em></p>
+                        <input type="submit" class="btn btn-primary" value="Add to Cart" onclick="addToCart(aa4)">
+                    </div>
+                    <div class="card-footer">
+                        <p>Image Source:</p>
+                        <a href="https://www.amazon.ae/Keychain-Keyring-Miniature-Reliever-Camouflage/dp/B093WL9R7D">https://www.amazon.ae/Keychain-Keyring-Miniature-Reliever-Camouflage/dp/B093WL9R7D</a>
+                    </div>
+                </div>
+                <div class="card col">
+                    <div class="card-body">
+                        <img src="images/aa5.jpg" alt="Dead Body Reported Engagement Ring Holder" class="card-img-top">
+                        <h5>Dead Body Reported Engagement Ring Holder</h5>
+                        <h6>What more can a totally real woman ask from her loyal, dependable, and strong knight in shining armor of a boyfriend that reeks of masculinity ask for than this magnificence? Just pair it with an overpriced diamond which sole value lies in the fact that someone poured blood into it, and poof! Eternal love...</h6>
+                        <p><em>PHP 8500</em></p>
+                        <input type="submit" class="btn btn-primary" value="Add to Cart" onclick="addToCart(aa5)">
+                    </div>
+                    <div class="card-footer">
+                        <p>Image Source:</p>
+                        <a href="https://www.reddit.com/r/gaming/comments/mengz7/surprising_the_love_of_my_life_with_this_tomorrow/?utm_source=share&utm_medium=web2x&context=3">https://www.reddit.com/r/gaming/comments/mengz7/surprising_the_love_of_my_life_with_this_tomorrow/?utm_source=share&utm_medium=web2x&context=3</a>
+                    </div>
+                </div>
+                <div class="card col">
+                    <div class="card-body">
+                        <img src="images/aa6.png" alt="Complete Personal Protective Equipment Against COVID-19" class="card-img-top">
+                        <h5>Complete Personal Protective Equipment Against COVID-19</h5>
+                        <h6>Haha lol lmao lolz jajaja ueueue that's so funny. Because it looks like Among Us sus with the visor and the one-piece, loosely-fitted, solid color, full-body covering. Cool joke. Seriously though, stay safe out there, soldier.</h6>
+                        <p><em>PHP 800</em></p>
+                        <input type="submit" class="btn btn-primary" value="Add to Cart" onclick="addToCart(aa6)">
+                    </div>
+                    <div class="card-footer">
+                        <p>Image Source:</p>
+                        <a href="https://www.medpagetoday.com/infectiousdisease/covid19/86528">https://www.medpagetoday.com/infectiousdisease/covid19/86528</a>
+                    </div>
+                </div>
+            </div>
+    </main>           
+    <div id="cartDisp">
+        <div>
+            <button class="btn" style="float: right; margin-right: 20px; width: 45px;" onclick="cartDisplay(1)">x</button>
+            <h2>Cart</h2>
+            <div id="table">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Item</th>
+                            <th scope="col">Price</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-cart"></tbody>
+                </table>
+                <div class="mb-3">
+                    <h6 style="text-align: right; margin-right: 50px; font-weight: 600; font-size: 23px;" id="total">Php 0.00</h6>
+                    <button class="btn" onclick="formDisplay(0)">Check Details</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="shadow"></div>
+    <div id="lastPage">
+        <div id="custDetails">
+            <button class="btn" style="float: right; width: 45px;" onclick="formDisplay(1)">x</button>
+            <form method="GET" action="http://sirjm.infinityfreeapp.com/checkout.php" >
+                <div>
+                    <br>
+                    Name: <input type="text" name="cust_name" placeholder="Full name" class="form-control" required><br>
+                    Email: <input type="text" name="cust_email" placeholder="Email Address" class="form-control" required><br>
+                    Delivery Address: <input type="text" name="cust_addr" placeholder="Delivery Address" class="form-control" required><br>
+                </div>
+                <input  id="cust_order" type="hidden" name="cust_order">
+                <input type="submit" value="Place Order" class="btn btn-primary">
+            </form>
+        </div>
+    </div>
+</body>

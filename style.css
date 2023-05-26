@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=Montserrat:wght@600&display=swap');
+
+body {
+    font-family: 'Montserrat', sans-serif !important;
+    background-image: url('images/space-bg.png');
+    background-repeat: repeat;
+    color: white !important;
+}
+
+a, a:visited, a:active {
+    color: inherit !important;
+    text-decoration: none !important;
+}
+
+header {
+    margin: 0;
+    padding: 50px;
+    padding-bottom: 175px;
+    background-image: url('images/banner.jpg');
+    background-size: cover;
+    background-position: center;
+    color: white;
+}
+
+#apparelTitle {
+    margin: 15px 0 0 15px;
+    font-size: 72pt !important;
+    font-family: 'Amatic Sc', cursive;
+}
+
+h1 {
+    font-family: 'Amatic SC', cursive;
+    font-size: 48pt !important;
+}
+
+header p {
+    margin-left: 15px;
+}
+
+#mainLogo {
+    margin-right: 20px;
+    width: 10%;
+    height: auto;
+    float: left;
+}
+
+nav {
+    display: flex;
+    align-items: right;
+    background-color: #292929;
+    margin: 0;
+    margin-bottom: 25px;
+    width: 100%;
+}
+
+nav * {
+    display: inline;
+    padding: 15px;
+}
+
+nav ul {
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 5px;
+}
+
+nav li {
+    margin: 0;
+    color: white;
+}
+
+nav a:hover {
+    color: #d9d9d9;
+}
+
+footer {
+    text-align: center;
+    background-color: #3a3a3a;
+    color: white;
+    margin: 0;
+    margin-top: 300px;
+    padding-top: 25px;
+    padding-bottom: 50px;
+}
